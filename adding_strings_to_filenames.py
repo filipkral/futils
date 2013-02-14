@@ -57,7 +57,7 @@ def main(top = r"C:\path\to\toppath", pattern = "*", pre = "before_",  post = "_
                 os.rename(f, newname) # rename it
                 logfile.write(newname)
             except Exception, e:
-                logfille.write("Error: " + str(e))
+                logfile.write("Error: " + str(e))
                 errorfreerun = False
             finally:
                 logfile.write("\n")
