@@ -35,7 +35,7 @@ def ListFiles(pattern, topdir):
 
 def main(top = r"C:\path\to\toppath", pattern = "*", pre = "before_",  post = "_after", logpath = r"C:\temp\logme.txt"):
     """
-    Rename all files under *top* folder (recursively) that match *pattern* so that the new file name si *pre*+originalfilename+*post*+.ext.
+    Rename all files under *top* folder (recursively) that match *pattern* so that the new file name is *pre*+originalfilename+*post*+.ext.
     top: root folder to start in
     pattern: rename only files that match this pattern, use e.g. *.jpg to deal with jpg files only, use * to include all files
     pre: string to append at the beginning of a file name
