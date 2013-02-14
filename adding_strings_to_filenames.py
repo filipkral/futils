@@ -27,7 +27,7 @@ def AddStringsToFileName(filepath=r"path\to\a\file.ext", addbefore="", addafter=
     filename = addbefore + filename + addafter + extension
     return os.path.join(dname, filename)
 
-def locate(pattern, topdir):
+def ListFiles(pattern, topdir):
     import fnmatch
     for path, dirs, files in os.walk(os.path.abspath(topdir)):
         for filename in fnmatch.filter(files, pattern):
@@ -48,7 +48,7 @@ def main(top = r"C:\path\to\toppath", pattern = "*", pre = "before_",  post = "_
         errorfreerun = True
         logfile = open(logpath, "w")
         #
-        ff = locate(pattern, top)
+        ff = ListFiles(pattern, top)
         for f in ff:
             #print "renaming: " + str(f)
             try:
