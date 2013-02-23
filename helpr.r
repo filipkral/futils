@@ -43,3 +43,10 @@ dataframe2htmltable<-function(x, file, htmlclass="", htmlid="", htmlhead="<head>
 	}
 	return(file)
 }
+
+
+getTimestampString<-function(form='%Y%m%d%H%M'){
+	# Return a string representing current time on the local machine in prescribed format form, default is yyyymmddHHMM.
+	# See ?format.POSIXct for details about time formatting.
+	return(format(Sys.time(), form))
+}
