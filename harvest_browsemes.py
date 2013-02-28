@@ -97,7 +97,7 @@ if __name__ == '__main__':
     ### example use: ###
     #
     # call with minimal parameters
-    main(top=r'D:\programming', outputfilepath=r'D:\programming\readsum.txt',)
+    #main(top=r'D:\programming', outputfilepath=r'D:\programming\readsum.txt',)
     # call with full parameters
     #main(top=r'D:\programming', outputfilepath=r'D:\programming\readsum.txt', readmefilename='README.html', outputsep='\t', keytagid='READMEDIV', ignore_case=True)
     pass
