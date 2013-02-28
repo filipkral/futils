@@ -17,6 +17,7 @@ class LocalHTMLParser(HTMLParser):
     """Purpose built HTMLParser designed to find content of a tag with id equal to keyidtag (browsme by default). Only content of the first tag with id keyidtag encountered will be retrieved!
     Instantiate object of this class, call the .feed method and then call .getdata to retrieve what the parser encountered.
     Case is ignored when searching for keyidtag.
+    Currently, if the tag you want to retrieve content for contains inner tags, only the part before the first inner tag will be retrieved. (TODO: fix this)
     """
     
     def __init__(self, keyidtag='browseme'):
@@ -97,7 +98,7 @@ if __name__ == '__main__':
     ### example use: ###
     #
     # call with minimal parameters
-    #main(top=r'D:\programming', outputfilepath=r'D:\programming\readsum.txt',)
+    #main(top=r'D:\programming', outputfilepath=r'D:\programming\readsum.txt')
     # call with full parameters
     #main(top=r'D:\programming', outputfilepath=r'D:\programming\readsum.txt', readmefilename='README.html', outputsep='\t', keytagid='READMEDIV', ignore_case=True)
     pass
