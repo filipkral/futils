@@ -14,64 +14,74 @@ import os, sys
 from HTMLParser import HTMLParser
 
 class LocalHTMLParser(HTMLParser):
-    """Purpose built HTMLParser designed to find content of a tag with id equal to keyidtag (browsme by default). Only content of the first tag with id keyidtag encountered will be retrieved!
+    """Purpose built HTMLParser designed to find content of a tags with id equal to strings in keyidtags list (browsme and browsemetoo by default). When the html feed contains more than one tag with the same id, only the content of the last one will be retrieved!
     Instantiate object of this class, call the .feed method and then call .getdata to retrieve what the parser encountered.
-    Case is ignored when searching for keyidtag.
-    Currently, if the tag you want to retrieve content for contains inner tags, only the part before the first inner tag will be retrieved. (TODO: fix this)
+    Case is ignored when searching for is that match keyidtags.
+    Currently, if the tag you want to retrieve content for contains inner tags, only the part before the first inner tag will be retrieved.
+    The get data method returns content of tags sorted according to the order of names in keyidtags
     """
-    
-    def __init__(self, keyidtag='browseme'):
+
+    def __init__(self, keyidtags=['browseme', 'browsemetoo']):
         HTMLParser.__init__(self)
-        self.keyidtag = str(keyidtag).lower()
+        self.keyidtags = map(str.lower, map(str, keyidtags))
         self.keyidtagfound = False
-        self.datafound = 'Tag with id=' + self.keyidtag + ' not found.'
-    
+        self.datafound = {}
+
     def handle_starttag(self, tag, attrs):
-        if attrs != []:
-            for key, value in attrs:
-                if str(key).lower() == 'id' and str(value).lower() == self.keyidtag:
-                    self.keyidtagfound = True
-                    break
+        if self.keyidtagfound == False:
+            if attrs != []:
+                for key, value in attrs:
+                    if str(key).lower() == 'id' and str(value).lower() in self.keyidtags:
+                        self.keyidtagfound = str(value).lower()
+                        break
         return
-    
+
     def handle_endtag(self, tag):
-        if self.keyidtagfound:
+        if self.keyidtagfound != False:
             self.keyidtagfound = False
         return
-    
+
     def handle_data(self, data):
-        if self.keyidtagfound:
-            self.datafound = str(data)
+        if self.keyidtagfound != False:
+            self.datafound.update({str(self.keyidtagfound):str(data)})
             self.keyidtagfound = False
-    
-    def getdata(self):
-        return self.datafound
+
+    def getdata(self, separator='\t'):
+        giveout = []
+        for k in self.keyidtags:
+            if k in self.datafound.keys():
+                giveout.append(self.datafound[k])
+            else:
+                giveout.append('')
+        return str(separator).join(giveout)
 
 
-def main(top, outputfilepath, readmefilename='BROWSEME.html', keytagid='browseme', outputsep='\t', ignore_case=True):
+def main(top, outputfilepath, readmefilename='BROWSEME.html', keytagids=['browseme', 'browsemetoo'], outputsep='\t', ignore_case=True):
     """Walk through a folder structure under folder top and retrieve content of files called readmename into a text file outputfilepath
     top: root folder to start listing files in
     outputfilepath: path to the text file to store outputs in, will be open in 'w' mode(!)
+    readmefilename: name of the files to look for
+    keytagsids: list of names of id tags to look for
     outputsep: separator to be used in the output file
     ignore_case: if True, case will be ignored when looking for files called as readmefilename
     """
     try:
-        parser = LocalHTMLParser(keyidtag=keytagid)
-    
+        parser = LocalHTMLParser(keyidtags=keytagids)
+
         ofile = open(outputfilepath, 'w')
         content = ''
-    
+
         # walk through folders
         for (adirpath, dirnames, filenames) in os.walk(top=top):
             for fname in filenames:
-        
+
                 # check if the file is the kind of file that should be handled
                 pickit = False
                 if ignore_case:
                     pickit = (fname).lower() == str(readmefilename).lower()
                 else:
                     pickit = str(fname) == str(readmefilename)
-        
+
                 # deal with the file
                 if pickit:
                     try:
@@ -94,11 +104,11 @@ def main(top, outputfilepath, readmefilename='BROWSEME.html', keytagid='browseme
             ofile.close()
 
 if __name__ == '__main__':
-    
+
     ### example use: ###
     #
     # call with minimal parameters
     #main(top=r'D:\programming', outputfilepath=r'D:\programming\readsum.txt')
     # call with full parameters
-    #main(top=r'D:\programming', outputfilepath=r'D:\programming\readsum.txt', readmefilename='README.html', outputsep='\t', keytagid='READMEDIV', ignore_case=True)
+    #main(top=r'D:\programming', outputfilepath=r'D:\programming\readsum.txt', readmefilename='BROWSEME.html', outputsep='\t', keytagids=['browseme', 'browsemetoo'], ignore_case=True)
     pass
