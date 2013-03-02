@@ -92,7 +92,7 @@ def main(top, outputfilepath, readmefilename='BROWSEME.html', keytagids=['browse
                         content = parser.getdata()
                         ofile.write(os.path.realpath(fpath) + outputsep + str(content).replace('\n', '').replace('\r', '') + '\n')
                     except Exception, ex:
-                        ofile.write(os.path.realpath(fpath) + outputsep + str(ex))
+                        ofile.write(fpath + outputsep + str(ex))
                     finally:
                         if 'rf' in dir():
                             if not rf.closed:
