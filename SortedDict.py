@@ -6,7 +6,7 @@
 # Author:      Filip Kral
 #
 # Created:     29/09/2013
-# Copyright:   (c) Filip 2013
+# Copyright:   (c) filipkral.com 2013
 # Licence:     MIT License http://choosealicense.com/licenses/mit/
 #-------------------------------------------------------------------------------
 
