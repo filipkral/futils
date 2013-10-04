@@ -61,7 +61,7 @@ class SortedDict(dict):
 
     def __setitem__(self, i, y):
         dict.__setitem__(self, i, y)
-        if y not in self.orderedkeys:
+        if i not in self.orderedkeys:
             self.orderedkeys.append(i)
 
     def toDict(self):
