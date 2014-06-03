@@ -50,3 +50,6 @@ getTimestampString<-function(form='%Y%m%d%H%M'){
 	# See ?format.POSIXct for details about time formatting.
 	return(format(Sys.time(), form))
 }
+
+x<-5
+print(x)
