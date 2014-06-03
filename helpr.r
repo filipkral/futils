@@ -51,5 +51,7 @@ getTimestampString<-function(form='%Y%m%d%H%M'){
 	return(format(Sys.time(), form))
 }
 
-x<-5
-print(x)
+if(FALSE){
+  x<-5
+  print(x)
+}
