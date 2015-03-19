@@ -1,0 +1,16 @@
+# Makefiles help manage dependencies
+# Indentaion must be done using <TAB> !
+# You run them by calling `make` or `make -f MyMakefile`
+# make looks for Makefile, makefile, ...
+
+main.exe: main.o sub1.o sub2.o
+    gfortran main.o sub1.o sub2.o -o main.exe
+
+main.o: main.f90
+    gfortran -c main.f90
+
+main.o: sub1.f90
+    gfortran -c sub1.f90
+    
+main.o: sub2.f90
+    gfortran -c sub2.f90
