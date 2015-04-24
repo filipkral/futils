@@ -140,7 +140,7 @@ deallocate (a, b, v)
 IF (v /= 0) write(*,*) "At least one array was not deallocated sucessfully."
 
 ! It is possible to test whether an array has been alocated:
-IF ALLOCATED(a) THEN
+IF (ALLOCATED(a)) THEN
     write(*,*) "Array has been allocated"
 ELSE
     write(*,*) "Array has not been allocated"
@@ -175,7 +175,17 @@ gdb a.out
 
 
 
+!! Loops can be defined using the forall statement, but only if the order of
+!! iteration does not matter. Compilers will try to optimize such loops.
 
+forall (i=1:5)
+    x(i) = y(i)*z
+end forall
+
+forall(I = 3:N + 1, J = 3:N + 1)
+  D(i, j) = C(i, j + 2) + C(i, j - 2) + C(i + 2, j) + C(i - 2, j)
+  D(i, j) = C(i, j)
+end forall
 
 
 
